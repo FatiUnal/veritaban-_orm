@@ -1,4 +1,4 @@
-package com.example.airdroptrackerbackendv1.controller;
+package org.example.orm.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
