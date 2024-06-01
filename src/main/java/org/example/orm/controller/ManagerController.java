@@ -1,5 +1,6 @@
 package org.example.orm.controller;
 
+import org.example.orm.dto.ObjectResponseDto;
 import org.example.orm.entity.Manager;
 import org.example.orm.service.ManagerService;
 import org.springframework.http.HttpStatus;
@@ -18,22 +19,22 @@ public class ManagerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Manager>> getList(){
+    public ResponseEntity<List<ObjectResponseDto>> getList(){
         return new ResponseEntity<>(managerService.getList(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Manager> create(@RequestParam String name){
+    public ResponseEntity<ObjectResponseDto> create(@RequestParam String name){
         return new ResponseEntity<>(managerService.create(name),HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Manager> update(@RequestParam int id, @RequestParam String name){
+    public ResponseEntity<ObjectResponseDto> update(@RequestParam int id, @RequestParam String name){
         return new ResponseEntity<>(managerService.update(id,name),HttpStatus.CREATED);
     }
 
     @DeleteMapping
-    public ResponseEntity<Manager> delete(@RequestParam int id){
+    public ResponseEntity<ObjectResponseDto> delete(@RequestParam int id){
         return new ResponseEntity<>(managerService.delete(id),HttpStatus.OK);
     }
 }

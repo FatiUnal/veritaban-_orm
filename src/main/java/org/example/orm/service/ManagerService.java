@@ -1,38 +1,43 @@
 package org.example.orm.service;
 
+import org.example.orm.builder.ObjectBuilder;
+import org.example.orm.dto.ObjectResponseDto;
 import org.example.orm.entity.Manager;
 import org.example.orm.repository.ManagerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ManagerService {
     private final ManagerRepository managerRepository;
+    private final ObjectBuilder builder;
 
-    public ManagerService(ManagerRepository managerRepository) {
+    public ManagerService(ManagerRepository managerRepository, ObjectBuilder builder) {
         this.managerRepository = managerRepository;
+        this.builder = builder;
     }
 
-    public List<Manager> getList() {
-        return managerRepository.findAll();
+    public List<ObjectResponseDto> getList() {
+        return managerRepository.findAll().stream().map(builder::getDto).collect(Collectors.toList());
     }
 
-    public Manager create(String name) {
+    public ObjectResponseDto create(String name) {
         Manager manager = new Manager(name);
-        return managerRepository.save(manager);
+        return builder.getDto(managerRepository.save(manager));
     }
 
-    public Manager update(int id, String name) {
+    public ObjectResponseDto update(int id, String name) {
         Manager manager = managerRepository.findById(id).orElseThrow(()->new RuntimeException());
         manager.setName(name);
-        return managerRepository.save(manager);
+        return builder.getDto(managerRepository.save(manager));
     }
 
-    public Manager delete(int id) {
+    public ObjectResponseDto delete(int id) {
         Manager manager = managerRepository.findById(id).orElseThrow(()->new RuntimeException());
         managerRepository.delete(manager);
-        return manager;
+        return builder.getDto(manager);
     }
 
     public Manager findById(int managerId) {

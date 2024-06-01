@@ -15,7 +15,7 @@ public class Position {
 
     private String name;
 
-    @OneToMany(mappedBy = "position",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "position",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Human> humans = new ArrayList<>();
 
     public Position(int id, String name, List<Human> humans) {

@@ -1,5 +1,6 @@
 package org.example.orm.controller;
 
+import org.example.orm.dto.ObjectResponseDto;
 import org.example.orm.entity.Departmant;
 import org.example.orm.entity.Manager;
 import org.example.orm.service.DepartmantService;
@@ -19,22 +20,22 @@ public class DepartmantController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Departmant>> getList(){
+    public ResponseEntity<List<ObjectResponseDto>> getList(){
         return new ResponseEntity<>(departmantService.getList(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Departmant> create(@RequestParam String name){
+    public ResponseEntity<ObjectResponseDto> create(@RequestParam String name){
         return new ResponseEntity<>(departmantService.create(name),HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Departmant> update(@RequestParam int id, @RequestParam String name){
+    public ResponseEntity<ObjectResponseDto> update(@RequestParam int id, @RequestParam String name){
         return new ResponseEntity<>(departmantService.update(id,name),HttpStatus.CREATED);
     }
 
     @DeleteMapping
-    public ResponseEntity<Departmant> delete(@RequestParam int id){
+    public ResponseEntity<ObjectResponseDto> delete(@RequestParam int id){
         return new ResponseEntity<>(departmantService.delete(id),HttpStatus.OK);
     }
 }

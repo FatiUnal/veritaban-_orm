@@ -1,38 +1,43 @@
 package org.example.orm.service;
 
+import org.example.orm.builder.ObjectBuilder;
+import org.example.orm.dto.ObjectResponseDto;
 import org.example.orm.entity.Departmant;
 import org.example.orm.repository.DepartmantRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DepartmantService {
     private final DepartmantRepository departmantRepository;
+    private final ObjectBuilder builder;
 
-    public DepartmantService(DepartmantRepository departmantRepository) {
+    public DepartmantService(DepartmantRepository departmantRepository, ObjectBuilder builder) {
         this.departmantRepository = departmantRepository;
+        this.builder = builder;
     }
 
-    public List<Departmant> getList() {
-        return departmantRepository.findAll();
+    public List<ObjectResponseDto> getList() {
+        return departmantRepository.findAll().stream().map(builder::getDto).collect(Collectors.toList());
     }
 
-    public Departmant create(String name) {
+    public ObjectResponseDto create(String name) {
         Departmant departmant = new Departmant(name);
-        return departmantRepository.save(departmant);
+        return builder.getDto(departmantRepository.save(departmant));
     }
 
-    public Departmant update(int id, String name) {
+    public ObjectResponseDto update(int id, String name) {
         Departmant departmant = departmantRepository.findById(id).orElseThrow(()-> new RuntimeException());
         departmant.setName(name);
-        return departmantRepository.save(departmant);
+        return builder.getDto(departmantRepository.save(departmant));
     }
 
-    public Departmant delete(int id) {
+    public ObjectResponseDto delete(int id) {
         Departmant departmant = departmantRepository.findById(id).orElseThrow(()-> new RuntimeException());
         departmantRepository.delete(departmant);
-        return departmant;
+        return builder.getDto(departmant);
     }
 
     public Departmant findById(int departmantId) {

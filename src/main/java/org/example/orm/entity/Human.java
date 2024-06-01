@@ -35,7 +35,6 @@ public class Human {
     @ManyToOne
     @JoinColumn(name = "position")
     private Position position;
-
     private Date dob;
     private boolean hispanicLatino;
     private Date dateOfHire;

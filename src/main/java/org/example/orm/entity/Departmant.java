@@ -11,7 +11,7 @@ public class Departmant {
     @GeneratedValue
     private int id;
     private String name;
-    @OneToMany(mappedBy = "departmant",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "departmant",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Human> humans = new ArrayList<>();
 
     public Departmant(int id, String name, List<Human> humans) {

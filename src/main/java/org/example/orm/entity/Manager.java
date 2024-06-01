@@ -1,9 +1,6 @@
 package org.example.orm.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +12,7 @@ public class Manager {
     private int id;
     private String name;
 
-    @OneToMany(mappedBy = "manager")
+    @OneToMany(mappedBy = "manager",fetch = FetchType.LAZY)
     private List<Human> humans = new ArrayList<>();
 
     public Manager(int id, String name, List<Human> humans) {
